@@ -7,12 +7,10 @@ import { Modal, Form, Button } from 'semantic-ui-react';
 export const EditProduct = ({ product, onEditProduct }) => {
   const [open, setOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(product);
-  const [isAllInputFull, setIsAllInputFull] = useState(true);
 
   const onChange = useCallback(
     (event) => {
       const { name, value } = event.target;
-      setIsAllInputFull(true);
 
       if (name === 'height') {
         setEditingProduct(prev => ({
@@ -40,24 +38,10 @@ export const EditProduct = ({ product, onEditProduct }) => {
 
   const onSubmit = useCallback(
     () => {
-      if (
-        editingProduct.name === undefined
-        || editingProduct.id === undefined
-        || editingProduct.imageUrl === undefined
-        || editingProduct.count === undefined
-        || editingProduct.size.width === undefined
-        || editingProduct.size.height === undefined
-        || editingProduct.weight === undefined
-      ) {
-        setIsAllInputFull(false);
-        return;
-      }
-
       editProduct(product.id, editingProduct);
       onEditProduct(editingProduct);
       setEditingProduct(product);
       setOpen(false);
-      setIsAllInputFull(true);
     }, [editingProduct]
   )
 
@@ -118,9 +102,6 @@ export const EditProduct = ({ product, onEditProduct }) => {
             placeholder='Weight'
           />
         </Form.Group>
-        {!isAllInputFull && (
-          <div className="error">All input are required</div>
-        )}
         <Button type='submit'>Submit</Button>
         <Button onClick={() => setOpen(false)} type='reset'>Cancel</Button>
       </Form>
