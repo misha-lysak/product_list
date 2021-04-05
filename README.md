@@ -11,8 +11,12 @@ Made app using React (Hooks), Semantic UI, npm: uniqKey, uniqId
 - NPM v6.14.4 and higher
 - PropTypes v15.7.2
 - React v17.0.2
+- React-dom: 17.0.2
+- Eslint: 7.23.0
+- Semantic UI Css: 2.4.1
 - Semantic UI React v2.0.3
 - Uniqid v5.3.0
+- Unique Key: 0.0.6
 
 ## Installing
 - Fork and clone this repository
