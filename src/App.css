@@ -1,38 +1,89 @@
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  align-items: end;
+  align-content: end;
+  margin: 15px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card-container {
+  border-radius: 5px;
+  background-color: rgba(192, 192, 192, 0.185);
+  padding: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.comments {
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  width: 82px;
+  padding: 5px;
+  background-color: rgba(192, 192, 192, 0.308);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.comments:hover {
+  background-color: silver;
+}
+
+.card {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+body {
+  margin: 0 auto;
+  justify-items: center;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.close {
+  display: block;
+  margin: 15px auto;
+  padding: 5px 25px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border: 2px solid rgba(0, 0, 0, 0.144);
+  border-radius: 5px;
+  background-color: rgba(192, 192, 192, 0.062);
+}
+
+.close:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.bottons {
+  width: 100%;
+}
+
+.delete {
+  display: flex;
+  margin: 10px 5px;
+  padding: 5px 110px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  border: 2px solid rgba(0, 0, 0, 0.144);
+  border-radius: 5px;
+  background-color: rgba(192, 192, 192, 0.062);
+}
+
+.delete:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+
+  width: 200px;
+  height: 50px;
+  line-height: 1.4rem;
+  font-weight: bold;
+
+  color: rgba(0, 0, 0, 0.685);
+  background-color: rgba(218, 13, 13, 0.493);
+  border-radius: 5px;
 }
