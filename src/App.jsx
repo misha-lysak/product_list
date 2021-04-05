@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { data } from './api';
-import './App.css';
-
 import 'semantic-ui-css/semantic.min.css';
-import { Button } from 'semantic-ui-react';
+import './App.css';
 import uniqueKey from 'unique-key';
+
+import { Button } from 'semantic-ui-react';
+import { data } from './api';
 
 import { SelectedCard } from './components/SelectedCard';
 import { ProductList } from './components/ProductList';
@@ -18,7 +18,7 @@ function App() {
 
   useEffect(async() => {
     setProductsList(await data())
-  }, [data])
+  }, [])
 
   const closeDescription = useCallback(
     () => {
@@ -47,6 +47,20 @@ function App() {
     }, []
   )
 
+  const onDelete = useCallback(
+    (id) => {
+      setProductsList(prev => (
+        prev.filter(product => product.id !== id)
+      ))
+    }, []
+  )
+
+  const onAdd = useCallback(
+    (newProduct) => {
+      setProductsList(prev => [...prev, newProduct])
+    }, []
+  )
+
   const openProduct = useCallback(
     (id) => {
       setDescription(true);
@@ -56,20 +70,32 @@ function App() {
 
   return (
     <>
-      <Button key={uniqueKey('button-name')} onClick={() => sortProducts('name')}>Sort by name</Button>
-      <Button key={uniqueKey('button-count')} onClick={() => sortProducts('count')}>Sort by count</Button>
-      <AddProduct />
+      <Button
+        key={uniqueKey('button-name')}
+        onClick={() => sortProducts('name')}
+      >
+        Sort by name
+      </Button>
+      <Button
+        key={uniqueKey('button-count')}
+        onClick={() => sortProducts('count')}
+      >
+        Sort by count
+      </Button>
+      <AddProduct onAdd={onAdd} />
       <div className="App">
         {!description && productsList.map(product => (
             <ProductList
               key={uniqueKey('card')}
               product={product}
               openProduct={openProduct}
+              onDelete={onDelete}
             />
         ))}
       </div>
       {description && (
         <SelectedCard
+          setProductsList={setProductsList}
           key={uniqueKey(123)}
           selectedProduct={selectedProduct}
           closeDescription={closeDescription}

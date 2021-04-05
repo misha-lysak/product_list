@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'
-
 import { Button, Modal } from 'semantic-ui-react';
+
 import { remove } from './../../api';
 
-export const ModalWindow = ({ id }) => {
+export const ModalWindow = ({ id, onDelete }) => {
   const [open, setOpen] = useState(false);
   
-  const handleDelete = () => {
-    remove(id)
-    setOpen(false)
+  const handleDelete = (id) => {
+    remove(id);
+    setOpen(false);
+    onDelete(id);
   }
 
   return (
@@ -35,7 +36,7 @@ export const ModalWindow = ({ id }) => {
           content="Yes"
           labelPosition='right'
           icon='archive'
-          onClick={() => handleDelete()}
+          onClick={() => handleDelete(id)}
           positive
         />
       </Modal.Actions>
@@ -45,4 +46,5 @@ export const ModalWindow = ({ id }) => {
 
 ModalWindow.propTypes = {
   id: PropTypes.string.isRequired,
+  onDelete: PropTypes.func,
 }

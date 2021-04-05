@@ -42,7 +42,7 @@ export const createProduct = (data) => (
     body: JSON.stringify({
       id: data.id,
       imageUrl: data.imageUrl,
-      name: data.productName,
+      name: data.name,
       count: data.count,
       size: {
         height: data.height,

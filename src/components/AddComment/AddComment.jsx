@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { createComment } from '../../api'
 
 
-export const AddComment = ({ productId }) => {
+export const AddComment = ({ productId, onAddComment }) => {
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
-  const [isAllInputFull, setIsAllInputFull] = useState(true)
+  const [isAllInputFull, setIsAllInputFull] = useState(true);
 
   const onChange = useCallback(
     (event) => {
@@ -32,13 +32,13 @@ export const AddComment = ({ productId }) => {
       }
 
       createComment(productId, newComment);
+      onAddComment(newComment);
       setNewComment('');
       setOpen(false)
       setIsAllInputFull(true)
     }, [newComment, open]
   )
-    
-    console.log(newComment);
+
   return (
     <Modal
       onClose={() => setOpen(false)}
@@ -49,13 +49,25 @@ export const AddComment = ({ productId }) => {
       <Modal.Content>
       <Form onSubmit={onSubmit}>
         <Form.Group>
-          <Form.Input onChange={event => onChange(event)} value={newComment.text} name="text" type="text" label='Comment' placeholder='Comment' />
+          <Form.Input
+            onChange={event => onChange(event)}
+            value={newComment.text}
+            name="text"
+            type="text"
+            label='Comment'
+            placeholder='Comment'
+          />
           {!isAllInputFull && (
             <div className="error">Write some comment</div>
           )}
         </Form.Group>
         <Button type='submit'>Submit</Button>
-        <Button onClick={() => setOpen(false)} type='reset'>Cancel</Button>
+        <Button
+          onClick={() => setOpen(false)}
+          type='reset'
+        >
+          Cancel
+        </Button>
       </Form>
       </Modal.Content>
       
@@ -65,4 +77,5 @@ export const AddComment = ({ productId }) => {
 
 AddComment.propTypes = {
   productId: PropTypes.string.isRequired,
+  onAddComment: PropTypes.func,
 }

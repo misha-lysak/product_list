@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { Modal, Form, Button } from 'semantic-ui-react';
-import { createProduct } from './../../api'
+import PropTypes from 'prop-types'
+import uniqid from 'uniqid';
 
-export const AddProduct = () => {
+import { Modal, Form, Button } from 'semantic-ui-react';
+import { createProduct } from './../../api';
+
+export const AddProduct = ({ onAdd }) => {
   const [open, setOpen] = useState(false);
   const [newProduct, setNewProduct] = useState('');
   const [isAllInputFull, setIsAllInputFull] = useState(true);
@@ -14,7 +17,7 @@ export const AddProduct = () => {
 
       setNewProduct(prev => ({
         ...prev,
-        id: +new Date(),
+        id: uniqid('hello'),
         [name]: value
       }))
     }, []
@@ -23,7 +26,7 @@ export const AddProduct = () => {
   const onSubmit = useCallback(
     () => {
       if (
-        newProduct.productName === undefined
+        newProduct.name === undefined
         || newProduct.id === undefined
         || newProduct.imageUrl === undefined
         || newProduct.count === undefined
@@ -36,6 +39,7 @@ export const AddProduct = () => {
       }
 
       createProduct(newProduct);
+      onAdd(newProduct);
       setNewProduct('');
       setOpen(false);
       setIsAllInputFull(true);
@@ -53,25 +57,75 @@ export const AddProduct = () => {
       <Modal.Content image>
       <Form onSubmit={onSubmit}>
         <Form.Group>
-          <Form.Input onChange={event => onChange(event)} value={newProduct.productName} name="productName" type="text" label='Product name' placeholder='Product name' />
-          <Form.Input onChange={event => onChange(event)} value={newProduct.imageUrl} name="imageUrl" type="text" label='Image Url' placeholder='Image Url' />
-        </Form.Group>
-        <Form.Group >
-          <Form.Input onChange={event => onChange(event)} value={newProduct.count} name="count" type="number" label='Count' placeholder='Count' />
-          <Form.Input onChange={event => onChange(event)} value={newProduct.width} name="width" type="number" label='Width' placeholder='Width' />
+          <Form.Input
+            onChange={event => onChange(event)}
+            value={newProduct.name}
+            name="name"
+            type="text"
+            label='Product name'
+            placeholder='Product name'
+          />
+          <Form.Input
+            onChange={event => onChange(event)}
+            value={newProduct.imageUrl}
+            name="imageUrl"
+            type="text"
+            label='Image Url'
+            placeholder='Image Url'
+          />
         </Form.Group>
         <Form.Group>
-          <Form.Input onChange={event => onChange(event)} value={newProduct.height} name="height" type="number" label='Height' placeholder='Height' />
-          <Form.Input onChange={event => onChange(event)} value={newProduct.weight} name="weight" type="number" label='Weight' placeholder='Weight' />
+          <Form.Input
+            onChange={event => onChange(event)}
+            value={newProduct.count}
+            name="count"
+            type="number"
+            label='Count'
+            placeholder='Count'
+          />
+          <Form.Input
+            onChange={event => onChange(event)}
+            value={newProduct.width}
+            name="width"
+            type="number"
+            label='Width'
+            placeholder='Width'
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Input
+            onChange={event => onChange(event)}
+            value={newProduct.height}
+            name="height"
+            type="number"
+            label='Height'
+            placeholder='Height'
+          />
+          <Form.Input
+            onChange={event => onChange(event)}
+            value={newProduct.weight}
+            name="weight"
+            type="number"
+            label='Weight'
+            placeholder='Weight'
+          />
         </Form.Group>
         {!isAllInputFull && (
           <div className="error">All input are required</div>
         )}
         <Button type='submit'>Submit</Button>
-        <Button onClick={() => setOpen(false)} type='reset'>Cancel</Button>
+        <Button
+          onClick={() => setOpen(false)}
+          type='reset'
+        >
+          Cancel
+        </Button>
       </Form>
       </Modal.Content>
-      
     </Modal>
   )
+}
+
+AddProduct.propTypes = {
+  onAdd: PropTypes.func,
 }
